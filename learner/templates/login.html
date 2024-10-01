@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .layout {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--panel-bg);
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .layout h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--title-color);
+            margin-bottom: 20px;
+        }
+
+        .layout form div {
+            margin-bottom: 15px;
+        }
+
+        .layout label {
+            display: block;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .layout input[type="text"],
+        .layout input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .layout input[type="text"]:focus,
+        .layout input[type="password"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .layout button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .layout button:hover {
+            background-color: var(--primary-color-hover);
+        }
+
+        .layout p {
+            margin-top: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .layout a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .layout a:hover {
+            color: var(--link-hover-color);
+        }
+
+        /* Theme Variables */
+        :root {
+            --background: #f5f7fa;
+            --text-color: #333;
+            --panel-bg: #fff;
+            --input-bg: #f0f0f5;
+            --primary-color: #6200EA;
+            --primary-color-hover: #4b00c4;
+            --title-color: #1a1a2e;
+            --link-color: #6200EA;
+            --link-hover-color: #4b00c4;
+            --text-muted: #777;
+        }
+
+        body.dark-mode {
+            --background: #181818;
+            --text-color: #f1f1f1;
+            --panel-bg: #2c2c2c;
+            --input-bg: #333;
+            --primary-color: #6200EA;
+            --primary-color-hover: #7b1fa2;
+            --title-color: #ffffff;
+            --link-color: #bb86fc;
+            --link-hover-color: #bb86fc;
+            --text-muted: #aaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .layout {
+                padding: 20px;
+            }
+
+            .layout h1 {
+                font-size: 1.8rem;
+            }
+
+            .layout button {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <h1>Login</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+
+</html>

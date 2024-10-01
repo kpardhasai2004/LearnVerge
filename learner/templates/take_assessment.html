@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* General Reset */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+    
+        body {
+          font-family: 'Poppins', sans-serif;
+          background: var(--background);
+          color: var(--text-color);
+          height: 100vh;
+          padding: 20px;
+          display: flex;
+          transition: background 0.3s ease, color 0.3s ease;
+        }
+    
+        .layout {
+          max-width: 80%;
+          width: 50%;
+          margin: 50px auto;
+          padding: 20px;
+          background-color: var(--panel-bg);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          border-radius: 10px;
+          margin: 0 auto;
+          margin-top: 1%;
+          margin-bottom: 1%;
+          padding: 20px;
+          overflow-y: auto;
+          border: 1px solid #ccc;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .layout h1 {
+          text-align: center;
+          color: var(--text-color);
+          font-size: 2rem;
+          margin-bottom: 20px;
+        }
+        
+        .layout p {
+          text-align: left;
+          color: var(--text-color);
+          margin-bottom: 20px;
+        }
+
+        .layout form div {
+          margin-bottom: 15px;
+        }
+    
+        .layout label {
+          display: block;
+          font-size: 1.1rem;
+          color: var(--text-color);
+          margin-bottom: 5px;
+        }
+    
+        .layout input[type="text"], .layout select {
+          width: 100%;
+          padding: 10px;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: var(--chat-bg); 
+          color: var(--text-color); 
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+          transition: border-color 0.3s ease;
+        }
+    
+        .layout input[type="text"]:focus, .layout select:focus {
+          border-color: var(--hamburger-color); 
+          outline: none;
+        }
+    
+        .layout button {
+          width: 50%;
+          padding: 12px;
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #fff;
+          background-color: var(--hamburger-color); 
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          display: block;  /* Set display to block */
+          margin: 0 auto;  /* Center the button */
+        }
+    
+        .layout button:hover {
+          background-color: #7b1fa2; /* Slightly lighter shade on hover */
+        }
+    
+        .layout button:active {
+          background-color: #4a148c; /* Darker shade on active click */
+        }
+    
+        .layout .file-upload {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          width: 100%;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: var(--chat-bg); 
+          color: var(--text-color); 
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+          transition: border-color 0.3s ease;
+        }
+    
+        .layout .file-upload-input {
+          display: flex; 
+          flex-direction: row;
+          height: 2.5rem;
+          width: 100%;
+          border-radius: 0.375rem;
+          border: 1px solid #E2E8F0;
+          background-color: #ffffff;
+          padding: 0.5rem 0.75rem;
+          font-size: 0.875rem;
+          color: #A0AEC0;
+          cursor: pointer;
+        }
+    
+        .layout .file-upload-input::-webkit-file-upload-button {
+          border: none;
+          background: transparent;
+          color: #4A5568;
+          font-size: 0.875rem;
+          font-weight: 500;
+        }
+    
+    
+        /* Theme Variables */
+        :root {
+          --background: #ece9e6;
+          --text-color: #333;
+          --panel-bg: #f4f4f9;
+          --chat-bg: #ffffff;
+          --chat-header-bg: linear-gradient(135deg, #4a148c, #7b1fa2);
+          --user-message-bg: linear-gradient(135deg, #6a11cb, #2575fc);
+          --bot-message-bg: #f0f0f0;
+          --footer-bg: #ffffff;
+        }
+    
+        :root {
+            --background: #ece9e6;
+            --text-color: #333;
+            --panel-bg: #f4f4f9;
+            --chat-bg: #ffffff;
+            --chat-header-bg: linear-gradient(135deg, #4a148c, #7b1fa2);
+            --user-message-bg: linear-gradient(135deg, #6a11cb, #2575fc);
+            --bot-message-bg: #f0f0f0;
+            --footer-bg: #ffffff;
+            --hamburger-color: #4A148C;
+        }
+    
+        body.dark-mode {
+            --background: #181818;
+            --text-color: #f1f1f1;
+            --panel-bg: #2c2c2c;
+            --chat-bg: #333;
+            --chat-header-bg: linear-gradient(135deg, #4A148C, #2c2c2c);
+            --user-message-bg: linear-gradient(135deg, #6a11cb, #2575fc);
+            --bot-message-bg: #444;
+            --footer-bg: #333;
+            --hamburger-color: #ffffff;
+        }
+    
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            background-color: #F4F4F9;
+            border-radius: 20px;
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+        }
+    
+    
+        /* Toggle Button */
+        /* Switch Settings */
+        .ui-switch {
+        --switch-bg: #a296b3;
+        --switch-width: 48px;
+        --switch-height: 20px;
+        --circle-diameter: 32px;
+        --circle-bg: #4A00B3;
+        --circle-inset: calc((var(--circle-diameter) - var(--switch-height)) / 2);
+        }
+    
+        .ui-switch input {
+        display: none;
+        }
+    
+        .slider {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: var(--switch-width);
+        height: var(--switch-height);
+        background: var(--switch-bg);
+        border-radius: 999px;
+        position: relative;
+        cursor: pointer;
+        }
+    
+        .slider .circle {
+        top: calc(var(--circle-inset) * -1);
+        left: 0;
+        width: var(--circle-diameter);
+        height: var(--circle-diameter);
+        position: absolute;
+        background: var(--circle-bg);
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHdpZHRoPSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNmZmYiCiAgICAgICAgZD0iTTkuMzA1IDEuNjY3VjMuNzVoMS4zODlWMS42NjdoLTEuMzl6bS00LjcwNyAxLjk1bC0uOTgyLjk4Mkw1LjA5IDYuMDcybC45ODItLjk4Mi0xLjQ3My0xLjQ3M3ptMTAuODAyIDBMMTMuOTI3IDUuMDlsLjk4Mi45ODIgMS40NzMtMS40NzMtLjk4Mi0uOTgyek0xMCA1LjEzOWE0Ljg3MiA0Ljg3MiAwIDAwLTQuODYyIDQuODZBNC44NzIgNC44NzIgMCAwMDEwIDE0Ljg2MiA0Ljg3MiA0Ljg3MiAwIDAwMTQuODYgMTAgNC44NzIgNC44NzIgMCAwMDEwIDUuMTM5em0wIDEuMzg5QTMuNDYyIDMuNDYyIDAgMDExMy40NzEgMTBhMy40NjIgMy40NjIgMCAwMS0zLjQ3MyAzLjQ3MkEzLjQ2MiAzLjQ2MiAwIDAxNi41MjcgMTAgMy40NjIgMy40NjIgMCAwMTEwIDYuNTI4ek0xLjY2NSA5LjMwNXYxLjM5aDIuMDgzdi0xLjM5SDEuNjY2em0xNC41ODMgMHYxLjM5aDIuMDg0di0xLjM5aC0yLjA4NHpNNS4wOSAxMy45MjhMMy42MTYgMTUuNGwuOTgyLjk4MiAxLjQ3My0xLjQ3My0uOTgyLS45ODJ6bTkuODIgMGwtLjk4Mi45ODIgMS40NzMgMS40NzMuOTgyLS45ODItMS40NzMtMS40NzN6TTkuMzA1IDE2LjI1djIuMDgzaDEuMzg5VjE2LjI1aC0xLjM5eiIgLz4KPC9zdmc+");
+        background-repeat: no-repeat;
+        background-position: center center;
+        transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+        }
+    
+        .slider .circle::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: inherit;
+        transition: all 500ms;
+        opacity: 0;
+        }
+    
+        /* Actions */
+        .ui-switch input:checked+.slider .circle {
+        left: calc(100% - var(--circle-diameter));
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHdpZHRoPSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNmZmYiCiAgICAgICAgZD0iTTQuMiAyLjVsLS43IDEuOC0xLjguNyAxLjguNy43IDEuOC42LTEuOEw2LjcgNWwtMS45LS43LS42LTEuOHptMTUgOC4zYTYuNyA2LjcgMCAxMS02LjYtNi42IDUuOCA1LjggMCAwMDYuNiA2LjZ6IiAvPgo8L3N2Zz4=");
+        }
+    
+        .ui-switch input:active+.slider .circle::before {
+        transition: 0s;
+        opacity: 1;
+        width: 0;
+        height: 0;
+        }
+    
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+    
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
+    
+        ::-webkit-scrollbar-thumb {
+          background: #ccc;
+          border-radius: 10px;
+        }
+    
+        ::-webkit-scrollbar-thumb:hover {
+          background: #bbb;
+        }
+    
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            transition: transform 0.2s;
+        }
+    
+        .icon-button:hover {
+            transform: scale(1.5);
+        }
+    
+        /* Left Bar Styling */
+        .left-bar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 70px; /* Width of the left bar */
+          background-color: var(--panel-bg);
+          border-radius: 0 20px 20px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 0;
+          box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+          justify-content: space-between; /* Distribute space evenly */
+        }
+    
+        .left-bar button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 20px;
+          color: var(--hamburger-color);
+          transition: color 0.3s ease;
+        }
+    
+        .left-bar button:hover {
+          color: #6a11cb;
+        } 
+    </style>
+</head>
+<body>
+
+  <div class="left-bar">
+    <div class="button-container">
+        <button class="ui-switch">
+          <a href="{% url 'chat_view' %}" >
+            <div>
+              <div style="transform: scale(1);">
+                  <svg width="100%" height="100%" viewBox="0 0 350 250.1225226673917">
+                      <defs id="SvgjsDefs3381">
+                          <linearGradient id="SvgjsLinearGradient3388">
+                              <stop id="SvgjsStop3389" stop-color="#4b0082" offset="0"></stop> 
+                              <stop id="SvgjsStop3390" stop-color="#da70d6" offset="0.5"></stop> 
+                              <stop id="SvgjsStop3391" stop-color="#1e90ff" offset="1"></stop> 
+                          </linearGradient>
+                      </defs>
+                      <g id="SvgjsG3382" transform="matrix(1.4,0,0,1.4,105,0.000008010864257812499)" fill="url(#SvgjsLinearGradient3388)">
+                          <g xmlns="http://www.w3.org/2000/svg">
+                              <path d="M74.988,37.5c0,13.807-11.182,25-24.988,25C50,55.604,44.396,50,37.5,50H24.988 C12.5,50,0,42.969,0,25C0,6.641,12.5,0,24.988,0H50c12.5,0,24.988,7.745,24.988,25V37.5z" fill="url(#SvgjsLinearGradient3388)"></path>
+                          </g>
+                          <path xmlns="http://www.w3.org/2000/svg" d="M37.5,37.5" fill="url(#SvgjsLinearGradient3388)"></path>
+                          <path xmlns="http://www.w3.org/2000/svg" d="M37.5,37.5" fill="url(#SvgjsLinearGradient3388)"></path>
+                          <g xmlns="http://www.w3.org/2000/svg">
+                              <g>
+                                  <path d="M81.189,38.165C80.822,55.078,66.992,68.75,50,68.75h-6.25V62.5c0-3.448-2.808-6.25-6.25-6.25 H25.623c-0.391,1.935-0.635,4.004-0.635,6.25V75c0,13.807,11.205,25,25.012,25c0-6.909,5.604-12.5,12.5-12.5h12.488 C87.5,87.5,100,80.469,100,62.5C100,47.211,91.297,40.125,81.189,38.165z" fill="url(#SvgjsLinearGradient3388)"></path>
+                              </g>
+                          </g>
+                    </g>
+              </svg>
+            </div>
+          </a>
+        </button>
+
+        <button onclick="togglePanel()" class="icon-button">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 30 30" width="30px" class="icon">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="#6200EA"/>
+          </svg>
+        </button>
+
+        <button class="icon-button">
+          <a href="{% url 'chat_view' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6200EA">
+                <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/>
+            </svg>
+          </a>      
+        </button>
+        
+        <button class="icon-button">
+            <a href="{% url 'calculator' %}">
+              <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6200EA">
+                <path d="M320-240h60v-80h80v-60h-80v-80h-60v80h-80v60h80v80Zm200-30h200v-60H520v60Zm0-100h200v-60H520v60Zm44-152 56-56 56 56 42-42-56-58 56-56-42-42-56 56-56-56-42 42 56 56-56 58 42 42Zm-314-70h200v-60H250v60Zm-50 472q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/>
+            </svg>
+            </a>      
+        </button>
+
+        {% if user.is_authenticated %}
+
+        <button class="icon-button">
+          <a href="{% url 'start_assessment' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6200EA">
+              <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm80-80h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM200-200v-560 560Z"/>
+            </svg>
+          </a>      
+        </button>
+
+        <button class="icon-button">
+          <a href="{% url 'view_analytics' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6200EA">
+              <path d="M280-280h80v-200h-80v200Zm320 0h80v-400h-80v400Zm-160 0h80v-120h-80v120Zm0-200h80v-80h-80v80ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/>
+            </svg>
+          </a>      
+        </button>
+        
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button class="icon-button" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6200EA">
+              <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/>
+            </svg>
+          </button>
+        </form>
+
+        {% else %}
+        <button class="icon-button">
+          <a href="{% url 'login' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6200EA">
+              <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/>
+            </svg>
+          </a>      
+        </button>
+        {% endif %}
+    </div>
+    
+      
+    <div>
+      <!-- Custom Toggle Switch for Dark Mode -->
+      <label class="ui-switch">
+        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+        <div class="slider">
+          <div class="circle"></div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+    <div class="layout">
+        <h1>Assessment on {{ assessment.topic.name }} ({{ assessment.difficulty }})</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div>
+                    <p>{{ question.text|safe }}</p>
+                    <input type="text" name="answer_{{ question.id }}" required>
+                </div>
+            {% endfor %}
+            <button type="submit">Submit Answers</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            const checkbox = document.getElementById('darkModeToggle');
+            body.classList.toggle('dark-mode');
+            checkbox.checked = body.classList.contains('dark-mode');
+        }
+    </script>
+
+</body>
+</html>

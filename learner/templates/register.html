@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .layout {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .layout h1 {
+            font-size: 2rem;
+            color: #4a148c;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .layout form div {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .layout label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .layout input[type="text"],
+        .layout input[type="email"],
+        .layout input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .layout input[type="text"]:focus,
+        .layout input[type="email"]:focus,
+        .layout input[type="password"]:focus {
+            border-color: #6a11cb;
+            outline: none;
+            box-shadow: 0 0 8px rgba(106, 17, 203, 0.2);
+        }
+
+        .layout button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #6a11cb;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .layout button:hover {
+            background-color: #2575fc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .layout button:active {
+            background-color: #4a148c;
+        }
+
+        .layout p {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .layout p a {
+            color: #2575fc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .layout p a:hover {
+            color: #4a148c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="layout">
+        <h1>Register</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+
+</body>
+
+</html>
